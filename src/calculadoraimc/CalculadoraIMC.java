@@ -1,16 +1,50 @@
 package calculadoraimc;
 
+import java.util.Scanner;
+
 public class CalculadoraIMC {
+
+    static double peso;
+    static double altura;
+    static double imc;
+    static String classificacao;
+
+    static Scanner teclado = new Scanner(System.in);
+
+    public static void coletaPeso() {
+        peso = teclado.nextDouble();
+    }
+
+    public static void coletaAltura() {
+        altura = teclado.nextDouble();
+        calculoIMC();
+    }
+
+    public static void calculoIMC() {
+        imc = peso / Math.pow(altura, 2);
+        classificacao();
+    }
+
+    public static void classificacao() {
+        String resultado = imc < 18.5 ? "Magreza" : "erro";
+        resultado = imc >= 18.5 && imc <= 24.9 ? "Normal" : resultado;
+        resultado = imc >= 25 && imc <= 29.9 ? "Sobrepeso" : resultado;
+        resultado = imc >= 30 && imc <= 34.9 ? "Obesidade grau I" : resultado;
+        resultado = imc >= 35 && imc <= 39.9 ? "Obesidade grau II" : resultado;
+        resultado = imc >= 40 ? "Obesidade grau III" : resultado;
+        classificacao = resultado;
+    }
+
     public static void main(String[] args) {
 
 //      03 - Faça uma calculadora que um calcule um IMC de uma pessoa e mostre o número e qual nível dela.
 
-        Coleta coleta = new Coleta();
         System.out.print("Digite o seu peso: ");
-        coleta.coletaAPeso();
+        coletaPeso();
         System.out.print("Digite sua altura: ");
-        coleta.coletaAltura();
+        coletaAltura();
 
-        System.out.printf("Com um Imc de %.1f você se encontra na classificacao: %s", coleta.getImc(), coleta.getClassificacao());
+        System.out.printf("Com um Imc de %.1f você se encontra na classificacao: %s", imc, classificacao);
+        teclado.close();
     }
 }
